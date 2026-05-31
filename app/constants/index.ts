@@ -5,37 +5,36 @@ export const navLinks = [
   { label: "Prizes", href: "#prizes" },
   { label: "FAQs", href: "#faqs" },
 ];
-
 export const problemThemes = [
   {
     id: 1,
-    title: "Education",
-    description: "Revolutionize learning through technology.",
-    image: "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=400&q=80",
+    title: "Healthcare",
+    description: "Improve healthcare accessibility, diagnostics, and patient care through innovative technology.",
+    image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400&q=80",
   },
   {
     id: 2,
-    title: "Advertisement",
-    description: "Innovate the future of digital marketing.",
-    image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=400&q=80",
+    title: "Education",
+    description: "Transform learning experiences and make education more accessible and engaging.",
+    image: "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=400&q=80",
   },
   {
     id: 3,
-    title: "Hiring",
-    description: "Transform the recruitment landscape.",
-    image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=400&q=80",
+    title: "Tourism",
+    description: "Enhance travel experiences, tourism services, and destination discovery.",
+    image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400&q=80",
   },
   {
     id: 4,
-    title: "Community",
-    description: "Build meaningful connections at scale.",
-    image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&q=80",
+    title: "Culture",
+    description: "Preserve, promote, and celebrate cultural heritage through digital innovation.",
+    image: "https://images.unsplash.com/photo-1518998053901-5348d3961a04?w=400&q=80",
   },
   {
     id: 5,
-    title: "Healthcare",
-    description: "Reimagine patient care and wellness.",
-    image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400&q=80",
+    title: "FinTech",
+    description: "Build innovative solutions for payments, banking, financial literacy, and inclusion.",
+    image: "https://images.unsplash.com/photo-1559526324-593bc073d938?w=400&q=80",
   },
 ];
 
