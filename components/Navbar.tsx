@@ -18,10 +18,10 @@ export default function Navbar() {
             {/* Logo */}
             <div className="flex flex-col leading-tight">
               <span className="text-white font-bold text-lg tracking-wide">
-                Cipher<span className="text-yellow-400">Thon 2.0</span>
+                LECA<span className="text-yellow-400">THON 2.0</span>
               </span>
               <span className="text-[10px] text-[#A3A3A3] tracking-widest uppercase">
-                by CipherSchools
+                by LECHACKS
               </span>
             </div>
 
