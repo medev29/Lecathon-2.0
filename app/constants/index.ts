@@ -54,7 +54,7 @@ export const cipherWeekSchedule = [
   {
     time: "10:00 - 11:00",
     phase: "Opening Ceremony",
-    description: "Welcome address & event kickoff by CipherSchools team",
+    description: "Welcome address & event kickoff by LEC-HACKS team",
   },
   {
     time: "11:00 - 13:00",
@@ -128,14 +128,14 @@ export const hackathonSchedule = [
 
 export const faqs = [
   {
-    question: "Who can participate in CipherThon 2.0?",
+    question: "Who can participate in Lecathon 2.0?",
     answer:
-      "CipherThon 2.0 is open to all college students, recent graduates, and young professionals passionate about technology and innovation. Teams of 2-4 members are encouraged, though solo participation is also welcome.",
+      "Lecathon 2.0 is open to all college students, recent graduates, and young professionals passionate about technology and innovation. Teams of 2-4 members are encouraged, though solo participation is also welcome.",
   },
   {
     question: "Is there a registration fee?",
     answer:
-      "No! CipherThon 2.0 is completely free to participate. We believe in making innovation accessible to everyone. Just register, form your team, and get ready to build.",
+      "yes! Lecathon 2.0  final participation need to pay NPR 2500 as a registration fees.",
   },
   {
     question: "What should I bring to the hackathon?",
@@ -153,11 +153,11 @@ export const faqs = [
       "Projects will be evaluated on Innovation & Creativity, Technical Implementation, Real-world Impact, Presentation Quality, and Scalability. Each criterion carries equal weight in the final score.",
   },
   {
-    question: "What are the prizes for CipherThon 2.0?",
+    question: "What are the prizes for Lecathon 2.0?",
     answer:
-      "Winners receive cash prizes (₹5,000 / ₹3,000 / ₹2,000), exciting gadgets, internship opportunities at leading companies, and certificates of achievement recognized by industry partners.",
+      "Winners receive cash prizes , exciting gadgets, internship opportunities at leading companies, and certificates of achievement recognized by industry partners.",
   },
 ];
 
 // Hackathon target date - set to a future date
-export const HACKATHON_DATE = new Date("2025-09-15T09:00:00");
+export const HACKATHON_DATE = new Date("2026-06-26T09:00:00");
