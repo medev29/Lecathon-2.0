@@ -115,7 +115,7 @@ export default function About() {
               coder, designer, or visionary — this is your stage to shine.
             </p>
             <p className="text-[#A3A3A3] text-sm leading-relaxed">
-              Over the course of one intense, idea-fuelled week and a 24-hour offline sprint, participants
+              Over the course of one intense, idea-fuelled week and a 48-hour offline sprint, participants
               will collaborate, innovate, and build products that matter.
             </p>
 
@@ -125,10 +125,10 @@ export default function About() {
               <div>
                 <p className="text-xs text-[#A3A3A3] uppercase tracking-wider mb-1">Venue</p>
                 <p className="text-white font-semibold text-sm">
-                  Institute of Management &amp; Technology —{" "}
-                  <span className="text-yellow-400">IMPunjab</span>
+                  Lumbini Engineering Management  &amp; Science college  {" "}
+                  <span className="text-yellow-400"></span>
                 </p>
-                <p className="text-[#A3A3A3] text-xs mt-0.5">Mohali, Punjab, India</p>
+                <p className="text-[#A3A3A3] text-xs mt-0.5"> Tilottama-7,Rupandehi,Nepal</p>
               </div>
             </div>
 

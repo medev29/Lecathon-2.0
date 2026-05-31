@@ -101,9 +101,9 @@ export default function Hero() {
               {/* Stats */}
               <div className="flex gap-8 pt-4 border-t border-white/5">
                 {[
-                  { value: "500+", label: "Participants" },
-                  { value: "24hrs", label: "Non-stop Coding" },
-                  { value: "₹10K+", label: "Prize Pool" },
+                  { value: "50+", label: "Participants" },
+                  { value: "48hrs", label: "Non-stop Coding" },
+                  { value: "NPR 1.5 lakh+", label: "Prize Pool" },
                 ].map((stat) => (
                   <div key={stat.label} className="flex flex-col">
                     <span className="text-xl font-black text-yellow-400">{stat.value}</span>
