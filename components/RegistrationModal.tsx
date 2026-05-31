@@ -22,7 +22,7 @@ export default function RegistrationModal({ open, onClose }: Props) {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
 
-  const themes = ["Education", "Advertisement", "Hiring", "Community", "Healthcare"];
+  const themes = ["Education", "Tourism",  "Culture", "Healthcare","Other"];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
