@@ -21,7 +21,7 @@ export default function Navbar() {
                 LECA<span className="text-yellow-400">THON 2.0</span>
               </span>
               <span className="text-[10px] text-[#A3A3A3] tracking-widest uppercase">
-                by LECHACKS
+                by LEC-HACKS
               </span>
             </div>
 

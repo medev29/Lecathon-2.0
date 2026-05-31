@@ -110,7 +110,7 @@ export default function About() {
             </div>
 
             <p className="text-[#A3A3A3] text-sm leading-relaxed">
-              CipherThon 2.0 is the flagship hackathon by CipherSchools, designed to bring together the
+            Lecathon  2.0 is the flagship hackathon by LEC-HACKS, designed to bring together the
               brightest young minds to solve real-world problems through technology. Whether you&apos;re a
               coder, designer, or visionary — this is your stage to shine.
             </p>

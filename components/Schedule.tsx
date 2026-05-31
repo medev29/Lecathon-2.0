@@ -57,7 +57,7 @@ export default function Schedule() {
           </h2>
           <div className="flex items-center justify-center gap-2 mt-3 text-[#A3A3A3] text-sm">
             <Calendar size={14} />
-            <span>September 15–16, 2025</span>
+            <span>Asar 12 , 2083</span>
           </div>
         </motion.div>
 
@@ -73,7 +73,7 @@ export default function Schedule() {
               }`}
             >
               <Clock size={13} />
-              CipherWeek (Online)
+             Lecaweek (Online)
             </button>
             <button
               onClick={() => setActiveTab("offline")}
@@ -83,7 +83,7 @@ export default function Schedule() {
                   : "text-[#A3A3A3] hover:text-white"
               }`}
             >
-              Offline 24 hrs Hackathon
+              Offline 48 hrs Hackathon
             </button>
           </div>
         </div>

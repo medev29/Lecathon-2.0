@@ -86,7 +86,7 @@ export default function RegistrationModal({ open, onClose }: Props) {
             ) : (
               <>
                 <div className="mb-6">
-                  <h2 className="text-xl font-bold text-white">Register for <span className="text-yellow-400">CipherThon 2.0</span></h2>
+                  <h2 className="text-xl font-bold text-white">Register for <span className="text-yellow-400">Lecathon 2.0</span></h2>
                   <p className="text-[#A3A3A3] text-sm mt-1">Fill in your details to secure your spot.</p>
                 </div>
 
