@@ -83,7 +83,7 @@ export default function About() {
             </div>
             {/* Accent card overlay */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-yellow-400/90 rounded-xl px-4 py-2 shadow-xl z-10">
-              <p className="text-black text-xs font-black uppercase tracking-wider">CipherThon 2.0</p>
+              <p className="text-black text-xs font-black uppercase tracking-wider">LECATHON 2.0</p>
             </div>
             {/* Decorative dots */}
             <div className="absolute -bottom-4 -left-4 w-24 h-24 opacity-20"
@@ -105,7 +105,7 @@ export default function About() {
             <div>
               <p className="text-yellow-400 text-xs font-semibold uppercase tracking-widest mb-3">About the Event</p>
               <h2 className="text-3xl sm:text-4xl font-black text-white leading-tight">
-                About <span className="text-yellow-400">CipherThon 2.0</span>
+                About <span className="text-yellow-400">LECATHON 2.0</span>
               </h2>
             </div>
 

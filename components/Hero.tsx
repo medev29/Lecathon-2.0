@@ -50,7 +50,7 @@ export default function Hero() {
               {/* Badge */}
               <div className="inline-flex items-center gap-2 bg-yellow-400/10 border border-yellow-400/20 rounded-full px-4 py-1.5 w-fit">
                 <Zap size={14} className="text-yellow-400" />
-                <span className="text-yellow-400 text-xs font-semibold tracking-wide uppercase">Hackathon 2025</span>
+                <span className="text-yellow-400 text-xs font-semibold tracking-wide uppercase">LECATHON 2026</span>
               </div>
 
               {/* Main heading */}
@@ -68,7 +68,7 @@ export default function Hero() {
               <div className="flex flex-col gap-1">
                 <p className="text-[#A3A3A3] text-sm font-medium tracking-widest uppercase">Presenting</p>
                 <h2 className="text-4xl sm:text-5xl font-black text-stroke-yellow leading-none tracking-tight">
-                  CipherThon 2.0
+                 Lecathon 2.0
                 </h2>
               </div>
 
