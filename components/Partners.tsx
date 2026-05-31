@@ -49,7 +49,7 @@ export default function Partners() {
           viewport={{ once: true }}
           className="text-center text-[#A3A3A3] text-xs mt-10"
         >
-          Interested in sponsoring CipherThon 2.0?{" "}
+          Interested in sponsoring Lecathon 2.0?{" "}
           <span className="text-yellow-400 underline cursor-pointer hover:text-yellow-300 transition-colors">
             Get in touch
           </span>
