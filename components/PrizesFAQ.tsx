@@ -63,9 +63,9 @@ function PrizeCard() {
 
 function PrizeMoney() {
   const prizes = [
-    { place: "1st", amount: "₹5,000", label: "First Prize" },
-    { place: "2nd", amount: "₹3,000", label: "Second Prize" },
-    { place: "3rd", amount: "₹2,000", label: "Third Prize" },
+    // { place: "1st", amount: "₹5,000", label: "First Prize" },
+    // { place: "2nd", amount: "₹3,000", label: "Second Prize" },
+    // { place: "3rd", amount: "₹2,000", label: "Third Prize" },
   ];
 
   return (

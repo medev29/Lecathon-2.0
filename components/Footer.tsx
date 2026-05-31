@@ -42,7 +42,7 @@ export default function Footer() {
             </div>
             <p className="text-[#A3A3A3] text-xs mt-2">
               <a href="mailto:hello@cipherschools.com" className="hover:text-yellow-400 transition-colors">
-                lec
+                LEC-HACKS
               </a>
             </p>
           </div>

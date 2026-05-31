@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "CipherThon 2.0 — Hack. Build. Innovate.",
+  title: "Lecathon 2.0 — Hack. Build. Innovate.",
   description:
-    "Join CipherThon 2.0, the flagship hackathon by CipherSchools. Build innovative solutions, win prizes, and launch your career.",
-  keywords: ["hackathon", "CipherSchools", "CipherThon", "tech", "innovation", "IMPunjab"],
+    "Join Lecathon 2.0, the flagship hackathon by LEC-HACKS. Build innovative solutions, win prizes, and launch your career.",
+  keywords: ["hackathon", "Lecathon", "LEC-HACKS", "tech", "innovation", ""],
   openGraph: {
-    title: "CipherThon 2.0",
-    description: "Learn, Build, Innovate — Join the most exciting hackathon of 2025.",
+    title: "Lecathon 2.0",
+    description: "Learn, Build, Innovate — Join the most exciting hackathon of 2026.",
     type: "website",
   },
 };

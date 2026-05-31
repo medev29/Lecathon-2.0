@@ -40,14 +40,14 @@ export const problemThemes = [
 ];
 
 export const partners = [
-  { name: "Brave", logo: "BRAVE" },
-  { name: "Circle", logo: "◎ CIRCLE" },
-  { name: "Discord", logo: "Discord" },
-  { name: "Google", logo: "Google" },
-  { name: "Jump_", logo: "Jump_" },
-  { name: "Lollapalooza", logo: "Lollapalooza" },
-  { name: "Magic Eden", logo: "Magic Eden" },
-  { name: "Phantom", logo: "Phantom" },
+  { name: "Brave", logo: " Partner" },
+  { name: "Circle", logo: "Partner" },
+  { name: "Discord", logo: "Partner" },
+  { name: "Google", logo: "Partner" },
+  { name: "Jump_", logo: "Partner" },
+  { name: "Lollapalooza", logo: "Partner" },
+  { name: "Magic Eden", logo: "Partner" },
+  { name: "Phantom", logo: "Partner" },
 ];
 
 export const cipherWeekSchedule = [
@@ -130,7 +130,7 @@ export const faqs = [
   {
     question: "Who can participate in Lecathon 2.0?",
     answer:
-      "Lecathon 2.0 is open to all college students, recent graduates, and young professionals passionate about technology and innovation. Teams of 2-4 members are encouraged, though solo participation is also welcome.",
+      "Lecathon 2.0 is open to all college students, recent graduates, and young professionals passionate about technology and innovation. Teams of 2-4 members are encouraged.",
   },
   {
     question: "Is there a registration fee?",
