@@ -14,21 +14,21 @@ export const problemThemes = [
   },
   {
     id: 2,
-    title: "Education",
+    title: "Education and Tourism ",
     description: "Transform learning experiences and make education more accessible and engaging.",
     image: "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=400&q=80",
   },
-  {
-    id: 3,
-    title: "Tourism",
-    description: "Enhance travel experiences, tourism services, and destination discovery.",
-    image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400&q=80",
-  },
+  // {
+  //   id: 3,
+  //   title: "Tourism",
+  //   description: "Enhance travel experiences, tourism services, and destination discovery.",
+  //   image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400&q=80",
+  // },
   {
     id: 4,
-    title: "Culture",
+    title: "FOOD and Safety",
     description: "Preserve, promote, and celebrate cultural heritage through digital innovation.",
-    image: "https://images.unsplash.com/photo-1518998053901-5348d3961a04?w=400&q=80",
+    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&q=80",
   },
   {
     id: 5,
