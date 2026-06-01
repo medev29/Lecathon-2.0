@@ -134,7 +134,7 @@ export const faqs = [
   {
     question: "Is there a registration fee?",
     answer:
-      "yes! Lecathon 2.0  final participation need to pay NPR 2500 as a registration fees.",
+      "yes! Lecathon 2.0's  final participants need to pay NPR 2500 as  registration fees.",
   },
   {
     question: "What should I bring to the hackathon?",
