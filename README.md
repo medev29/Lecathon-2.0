@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Lecathon 2.0
 
-## Getting Started
+Landing page and CMS for the LEC-HACKS hackathon at LEMSC.
 
-First, run the development server:
+## Setup
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Copy environment variables:
+
+```bash
+cp .env.example .env.local
+```
+
+3. In [Neon](https://neon.tech), create a database and run `db/schema.sql` in the SQL editor.
+
+4. Set in `.env.local`:
+
+- `DATABASE_URL` — Neon connection string
+- `ADMIN_PASSWORD` — password for `/admin`
+
+Optional — **registration email** (works on Vercel **without a custom domain**):
+
+Use a **Gmail App Password** (recommended for hackathon clubs):
+
+1. Turn on [2-Step Verification](https://myaccount.google.com/security) for the club Gmail.
+2. Create an [App password](https://myaccount.google.com/apppasswords) (Mail).
+3. Add to `.env.local` (and Vercel → Settings → Environment Variables):
+
+```env
+SMTP_USER=yourclub@gmail.com
+SMTP_PASS=xxxx xxxx xxxx xxxx
+EMAIL_FROM=Lecathon <yourclub@gmail.com>
+ADMIN_NOTIFICATION_EMAIL=yourclub@gmail.com
+```
+
+- Organizers get an email on each registration.
+- The team leader gets a confirmation email.
+- `SEND_REGISTRATION_CONFIRMATION=false` disables the leader email.
+
+**Deploy on Vercel:** push to GitHub, import the repo, add the same env vars, use the free `*.vercel.app` URL — no domain purchase required.
+
+Alternative: [Resend](https://resend.com) with `RESEND_API_KEY` — needs a verified domain to email participants; test mode only sends to your own Resend email.
+
+5. Start the dev server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+6. Open [http://localhost:3000/admin/login](http://localhost:3000/admin/login), sign in, then click **Seed default content** on the overview page (first time only).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Admin CMS
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| URL | Purpose |
+|-----|---------|
+| `/admin` | Dashboard overview |
+| `/admin/registrations` | View teams, download CSV |
+| `/admin/sponsors` | Add / delete sponsors |
+| `/admin/themes` | Problem themes |
+| `/admin/schedule` | Lecaweek & hackathon schedule |
+| `/admin/faqs` | FAQ entries |
+| `/admin/settings` | Event date, venue, hero stats, prize pool |
 
-## Learn More
+Public site at `/` reads content from the database when CMS tables are populated.
 
-To learn more about Next.js, take a look at the following resources:
+## Scripts
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `npm run dev` — development
+- `npm run build` — production build
+- `npm run start` — production server
+- `npm run lint` — ESLint

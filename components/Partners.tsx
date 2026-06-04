@@ -1,9 +1,55 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { partners } from "@/app/constants";
+import type { Sponsor } from "@/lib/types/site";
 
-export default function Partners() {
+function SponsorCard({ partner, index }: { partner: Sponsor; index: number }) {
+  const content = partner.logoUrl ? (
+    <img
+      src={partner.logoUrl}
+      alt={partner.name}
+      className="max-h-10 max-w-full object-contain opacity-70 group-hover:opacity-100 transition-opacity"
+    />
+  ) : (
+    <span className="text-white/50 font-bold text-sm tracking-wide group-hover:text-white/80 transition-colors text-center">
+      {partner.logoText || partner.name}
+    </span>
+  );
+
+  const className =
+    "flex items-center justify-center p-5 bg-[#1a1a1a] border border-white/8 rounded-xl hover:border-white/20 transition-all duration-300 group min-h-[88px]";
+
+  if (partner.websiteUrl) {
+    return (
+      <motion.a
+        href={partner.websiteUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        initial={{ opacity: 0, y: 10 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: index * 0.05 }}
+        className={className}
+      >
+        {content}
+      </motion.a>
+    );
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.05 }}
+      className={className}
+    >
+      {content}
+    </motion.div>
+  );
+}
+
+export default function Partners({ sponsors }: { sponsors: Sponsor[] }) {
   return (
     <section className="py-20 border-t border-b border-white/5 relative overflow-hidden">
       <div className="absolute inset-0 bg-[#0d0d0d]" />
@@ -20,28 +66,11 @@ export default function Partners() {
           </h2>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ staggerChildren: 0.08 }}
-          className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-4xl mx-auto"
-        >
-          {partners.map((partner, i) => (
-            <motion.div
-              key={partner.name}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.05 }}
-              className="flex items-center justify-center p-5 bg-[#1a1a1a] border border-white/8 rounded-xl hover:border-white/20 transition-all duration-300 group"
-            >
-              <span className="text-white/50 font-bold text-sm tracking-wide group-hover:text-white/80 transition-colors duration-300 text-center">
-                {partner.logo}
-              </span>
-            </motion.div>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-4xl mx-auto">
+          {sponsors.map((partner, i) => (
+            <SponsorCard key={partner.id} partner={partner} index={i} />
           ))}
-        </motion.div>
+        </div>
 
         <motion.p
           initial={{ opacity: 0 }}

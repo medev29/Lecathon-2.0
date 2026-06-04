@@ -27,7 +27,8 @@ export const problemThemes = [
   {
     id: 4,
     title: "FOOD and Safety",
-    description: "Preserve, promote, and celebrate cultural heritage through digital innovation.",
+    description:
+      "Improve food safety, traceability, nutrition, and sustainable food systems through technology.",
     image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&q=80",
   },
   {
@@ -49,7 +50,12 @@ export const partners = [
   { name: "Phantom", logo: "Partner" },
 ];
 
-export const cipherWeekSchedule = [
+export const registrationThemes = [
+  ...problemThemes.map((t) => t.title),
+  "Other",
+];
+
+export const lecaWeekSchedule = [
   {
     time: "10:00 - 11:00",
     phase: "Opening Ceremony",

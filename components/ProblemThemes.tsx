@@ -3,16 +3,22 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Lightbulb, ArrowRight } from "lucide-react";
-import { problemThemes } from "@/app/constants";
+import type { ProblemTheme } from "@/lib/types/site";
 import RegistrationModal from "./RegistrationModal";
 
-export default function ProblemThemes() {
+export default function ProblemThemes({
+  problemThemes,
+  registrationThemes,
+}: {
+  problemThemes: ProblemTheme[];
+  registrationThemes: string[];
+}) {
   const [startIdx, setStartIdx] = useState(0);
   const [regOpen, setRegOpen] = useState(false);
-  const visible = 4;
+  const visible = Math.min(4, Math.max(problemThemes.length, 1));
 
   const canPrev = startIdx > 0;
-  const canNext = startIdx + visible < problemThemes.length;
+  const canNext = problemThemes.length > visible && startIdx + visible < problemThemes.length;
 
   const prev = () => canPrev && setStartIdx(startIdx - 1);
   const next = () => canNext && setStartIdx(startIdx + 1);
@@ -58,7 +64,7 @@ export default function ProblemThemes() {
                   >
                     {/* Background image */}
                     <img
-                      src={theme.image}
+                      src={theme.imageUrl}
                       alt={theme.title}
                       className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
@@ -125,7 +131,11 @@ export default function ProblemThemes() {
         </div>
       </section>
 
-      <RegistrationModal open={regOpen} onClose={() => setRegOpen(false)} />
+      <RegistrationModal
+        open={regOpen}
+        onClose={() => setRegOpen(false)}
+        registrationThemes={registrationThemes}
+      />
     </>
   );
 }

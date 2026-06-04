@@ -6,7 +6,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { navLinks } from "@/app/constants";
 import RegistrationModal from "./RegistrationModal";
 
-export default function Navbar() {
+export default function Navbar({
+  registrationThemes,
+}: {
+  registrationThemes: string[];
+}) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [regOpen, setRegOpen] = useState(false);
 
@@ -90,7 +94,11 @@ export default function Navbar() {
         </AnimatePresence>
       </nav>
 
-      <RegistrationModal open={regOpen} onClose={() => setRegOpen(false)} />
+      <RegistrationModal
+        open={regOpen}
+        onClose={() => setRegOpen(false)}
+        registrationThemes={registrationThemes}
+      />
     </>
   );
 }

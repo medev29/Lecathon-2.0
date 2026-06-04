@@ -1,0 +1,242 @@
+import nodemailer from "nodemailer";
+import type { ValidatedRegistration } from "@/lib/registration";
+
+type SendResult = { ok: true } | { ok: false; error: string };
+
+type EmailProvider = "smtp" | "resend";
+
+function getSharedConfig() {
+  const from = process.env.EMAIL_FROM?.trim();
+  const adminTo = process.env.ADMIN_NOTIFICATION_EMAIL?.trim();
+  if (!from || !adminTo) {
+    return null;
+  }
+  return { from, adminTo };
+}
+
+function getProvider(): EmailProvider | null {
+  const shared = getSharedConfig();
+  if (!shared) {
+    return null;
+  }
+
+  const smtpUser = process.env.SMTP_USER?.trim();
+  const smtpPass = process.env.SMTP_PASS?.trim();
+  if (smtpUser && smtpPass) {
+    return "smtp";
+  }
+
+  if (process.env.RESEND_API_KEY?.trim()) {
+    return "resend";
+  }
+
+  return null;
+}
+
+async function sendViaSmtp(options: {
+  to: string[];
+  subject: string;
+  html: string;
+}): Promise<SendResult> {
+  const shared = getSharedConfig();
+  const user = process.env.SMTP_USER?.trim();
+  const pass = process.env.SMTP_PASS?.trim();
+  if (!shared || !user || !pass) {
+    return { ok: false, error: "SMTP is not configured." };
+  }
+
+  const host = process.env.SMTP_HOST?.trim() || "smtp.gmail.com";
+  const port = Number(process.env.SMTP_PORT || "587");
+
+  try {
+    const transport = nodemailer.createTransport({
+      host,
+      port,
+      secure: port === 465,
+      auth: { user, pass },
+    });
+
+    await transport.sendMail({
+      from: shared.from,
+      to: options.to.join(", "),
+      subject: options.subject,
+      html: options.html,
+    });
+
+    return { ok: true };
+  } catch (err) {
+    return {
+      ok: false,
+      error: err instanceof Error ? err.message : "SMTP send failed",
+    };
+  }
+}
+
+async function sendViaResend(options: {
+  to: string[];
+  subject: string;
+  html: string;
+}): Promise<SendResult> {
+  const shared = getSharedConfig();
+  const apiKey = process.env.RESEND_API_KEY?.trim();
+  if (!shared || !apiKey) {
+    return { ok: false, error: "Resend is not configured." };
+  }
+
+  try {
+    const res = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: shared.from,
+        to: options.to,
+        subject: options.subject,
+        html: options.html,
+      }),
+    });
+
+    if (!res.ok) {
+      const body = await res.text();
+      return { ok: false, error: body || `Resend HTTP ${res.status}` };
+    }
+
+    return { ok: true };
+  } catch (err) {
+    return {
+      ok: false,
+      error: err instanceof Error ? err.message : "Resend send failed",
+    };
+  }
+}
+
+async function sendEmail(options: {
+  to: string | string[];
+  subject: string;
+  html: string;
+}): Promise<SendResult> {
+  const provider = getProvider();
+  if (!provider) {
+    return { ok: false, error: "Email is not configured." };
+  }
+
+  const to = (Array.isArray(options.to) ? options.to : [options.to])
+    .map((e) => e.trim())
+    .filter(Boolean);
+
+  if (provider === "smtp") {
+    return sendViaSmtp({ ...options, to });
+  }
+  return sendViaResend({ ...options, to });
+}
+
+function escapeHtml(text: string): string {
+  return text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function membersHtml(members: ValidatedRegistration["members"]): string {
+  return members
+    .map(
+      (m, i) =>
+        `<tr><td style="padding:8px;border-bottom:1px solid #eee;">${i + 1}</td><td style="padding:8px;border-bottom:1px solid #eee;">${escapeHtml(m.name)}</td><td style="padding:8px;border-bottom:1px solid #eee;">${escapeHtml(m.email)}</td></tr>`
+    )
+    .join("");
+}
+
+function adminNotificationHtml(
+  data: ValidatedRegistration,
+  registrationId: string
+): string {
+  return `
+    <div style="font-family:sans-serif;max-width:560px;color:#111;">
+      <h2 style="color:#111;margin:0 0 16px;">New Lecathon 2.0 registration</h2>
+      <p style="margin:0 0 8px;"><strong>ID:</strong> ${escapeHtml(registrationId)}</p>
+      <p style="margin:0 0 8px;"><strong>Team:</strong> ${escapeHtml(data.teamName)}</p>
+      <p style="margin:0 0 8px;"><strong>Leader:</strong> ${escapeHtml(data.name)} (${escapeHtml(data.email)})</p>
+      <p style="margin:0 0 8px;"><strong>Phone:</strong> ${escapeHtml(data.phone)}</p>
+      <p style="margin:0 0 8px;"><strong>College:</strong> ${escapeHtml(data.college)}</p>
+      <p style="margin:0 0 8px;"><strong>Theme:</strong> ${escapeHtml(data.theme || "—")}</p>
+      <p style="margin:0 0 16px;"><strong>Team size:</strong> ${data.teamSize}</p>
+      <table style="width:100%;border-collapse:collapse;font-size:14px;">
+        <thead><tr style="background:#f5f5f5;">
+          <th style="padding:8px;text-align:left;">#</th>
+          <th style="padding:8px;text-align:left;">Member</th>
+          <th style="padding:8px;text-align:left;">Email</th>
+        </tr></thead>
+        <tbody>${membersHtml(data.members)}</tbody>
+      </table>
+      <p style="margin:24px 0 0;font-size:12px;color:#666;">View all registrations in the Lecathon CMS admin dashboard.</p>
+    </div>
+  `;
+}
+
+function confirmationHtml(
+  data: ValidatedRegistration,
+  registrationId: string
+): string {
+  return `
+    <div style="font-family:sans-serif;max-width:560px;color:#111;">
+      <h2 style="color:#111;margin:0 0 16px;">You're registered for Lecathon 2.0</h2>
+      <p>Hi ${escapeHtml(data.name)},</p>
+      <p>Your team <strong>${escapeHtml(data.teamName)}</strong> has been registered successfully.</p>
+      <p style="margin:0 0 8px;"><strong>Reference:</strong> ${escapeHtml(registrationId)}</p>
+      <p style="margin:0 0 8px;"><strong>College:</strong> ${escapeHtml(data.college)}</p>
+      <p style="margin:0 0 8px;"><strong>Preferred theme:</strong> ${escapeHtml(data.theme || "Not selected")}</p>
+      <p>We'll send event details and next steps to this email soon. Keep an eye on your inbox.</p>
+      <p style="margin:24px 0 0;font-size:12px;color:#666;">— LEC-HACKS · Lecathon 2.0</p>
+    </div>
+  `;
+}
+
+export function isEmailConfigured(): boolean {
+  return getProvider() !== null;
+}
+
+export function getEmailProviderLabel(): string {
+  const p = getProvider();
+  if (p === "smtp") return "SMTP (Gmail, etc.)";
+  if (p === "resend") return "Resend";
+  return "disabled";
+}
+
+export async function sendRegistrationEmails(
+  data: ValidatedRegistration,
+  registrationId: string
+): Promise<{ admin: SendResult; confirmation: SendResult | null }> {
+  const shared = getSharedConfig();
+  if (!getProvider() || !shared) {
+    const skipped = { ok: false as const, error: "Email not configured" };
+    return { admin: skipped, confirmation: null };
+  }
+
+  const adminTo = shared.adminTo
+    .split(",")
+    .map((e) => e.trim())
+    .filter(Boolean);
+
+  const admin = await sendEmail({
+    to: adminTo,
+    subject: `[Lecathon] New team: ${data.teamName}`,
+    html: adminNotificationHtml(data, registrationId),
+  });
+
+  const sendConfirmation =
+    process.env.SEND_REGISTRATION_CONFIRMATION !== "false";
+
+  let confirmation: SendResult | null = null;
+  if (sendConfirmation) {
+    confirmation = await sendEmail({
+      to: data.email,
+      subject: "Lecathon 2.0 — Registration confirmed",
+      html: confirmationHtml(data, registrationId),
+    });
+  }
+
+  return { admin, confirmation };
+}

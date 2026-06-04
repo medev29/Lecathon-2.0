@@ -1,51 +1,71 @@
 import { NextRequest, NextResponse } from "next/server";
-
-interface RegistrationPayload {
-  name: string;
-  email: string;
-  phone?: string;
-  teamName?: string;
-  college?: string;
-  theme?: string;
-}
+import { saveRegistration } from "@/lib/db";
+import { getEmailProviderLabel, sendRegistrationEmails } from "@/lib/email";
+import {
+  validateRegistration,
+  type RegistrationPayload,
+} from "@/lib/registration";
 
 export async function POST(req: NextRequest) {
   try {
     const body: RegistrationPayload = await req.json();
+    const result = validateRegistration(body);
 
-    // Basic validation
-    if (!body.name || !body.email) {
+    if (!result.ok) {
       return NextResponse.json(
-        { success: false, message: "Name and email are required." },
+        { success: false, message: result.message },
         { status: 400 }
       );
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(body.email)) {
+    const { data } = result;
+    let id: string;
+
+    try {
+      const dbId = await saveRegistration(data);
+      if (dbId != null) {
+        id = `REG-${dbId}`;
+      } else {
+        console.log("New registration (no DATABASE_URL):", {
+          ...data,
+          registeredAt: new Date().toISOString(),
+        });
+        id = `REG-${Date.now()}`;
+      }
+    } catch (dbError) {
+      console.error("Registration DB error:", dbError);
       return NextResponse.json(
-        { success: false, message: "Invalid email format." },
-        { status: 400 }
+        {
+          success: false,
+          message: "Could not save registration. Please try again later.",
+        },
+        { status: 503 }
       );
     }
 
-    // In a real app, you'd save this to a database (e.g., Prisma + PostgreSQL)
-    console.log("New registration:", {
-      ...body,
-      registeredAt: new Date().toISOString(),
-    });
-
-    // Simulate async DB write
-    await new Promise((resolve) => setTimeout(resolve, 300));
+    sendRegistrationEmails(data, id)
+      .then((results) => {
+        if (!results.admin.ok) {
+          console.error("Admin notification email failed:", results.admin.error);
+        }
+        if (results.confirmation && !results.confirmation.ok) {
+          console.error(
+            "Confirmation email failed:",
+            results.confirmation.error
+          );
+        }
+      })
+      .catch((err) => console.error("Registration email error:", err));
 
     return NextResponse.json(
       {
         success: true,
         message: "Registration successful! We'll be in touch soon.",
         data: {
-          id: `REG-${Date.now()}`,
-          name: body.name,
-          email: body.email,
+          id,
+          name: data.name,
+          email: data.email,
+          teamName: data.teamName,
           registeredAt: new Date().toISOString(),
         },
       },
@@ -61,11 +81,25 @@ export async function POST(req: NextRequest) {
 
 export async function GET() {
   return NextResponse.json({
-    message: "CipherThon 2.0 Registration API",
+    message: "Lecathon 2.0 Registration API",
     endpoints: {
-      POST: "/api/register — Submit registration payload",
+      POST: "/api/register — Submit team registration",
     },
-    requiredFields: ["name", "email"],
-    optionalFields: ["phone", "teamName", "college", "theme"],
+    requiredFields: [
+      "name",
+      "email",
+      "phone",
+      "teamName",
+      "college",
+      "teamSize",
+      "members",
+    ],
+    optionalFields: ["theme"],
+    persistence: process.env.DATABASE_URL
+      ? "Neon Postgres (DATABASE_URL)"
+      : "console log only — set DATABASE_URL to persist",
+    email: getEmailProviderLabel(),
+    emailSetup:
+      "Gmail (no domain): SMTP_USER, SMTP_PASS, EMAIL_FROM, ADMIN_NOTIFICATION_EMAIL",
   });
 }

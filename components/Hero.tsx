@@ -5,7 +5,17 @@ import { motion } from "framer-motion";
 import { ArrowRight, FileText, Monitor, Cpu, Globe, Zap } from "lucide-react";
 import RegistrationModal from "./RegistrationModal";
 
-export default function Hero() {
+export default function Hero({
+  registrationThemes,
+  participantsLabel,
+  durationLabel,
+  prizePool,
+}: {
+  registrationThemes: string[];
+  participantsLabel: string;
+  durationLabel: string;
+  prizePool: string;
+}) {
   const [regOpen, setRegOpen] = useState(false);
 
   return (
@@ -64,7 +74,7 @@ export default function Hero() {
                 </h1>
               </div>
 
-              {/* CipherThon with stroke text */}
+              {/* Event title */}
               <div className="flex flex-col gap-1">
                 <p className="text-[#A3A3A3] text-sm font-medium tracking-widest uppercase">Presenting</p>
                 <h2 className="text-4xl sm:text-5xl font-black text-stroke-yellow leading-none tracking-tight">
@@ -88,22 +98,23 @@ export default function Hero() {
                 >
                   Register Now <ArrowRight size={16} />
                 </motion.button>
-                <motion.button
+                <motion.a
+                  href="#themes"
                   whileHover={{ scale: 1.04 }}
                   whileTap={{ scale: 0.98 }}
                   className="flex items-center gap-2 px-7 py-3 bg-[#1E1E1E] text-white font-semibold rounded-full text-sm border border-white/10 hover:border-white/30 transition-all"
                 >
                   <FileText size={16} className="text-[#A3A3A3]" />
-                  View Problem Statement
-                </motion.button>
+                  View Problem Themes
+                </motion.a>
               </div>
 
               {/* Stats */}
               <div className="flex gap-8 pt-4 border-t border-white/5">
                 {[
-                  { value: "50+", label: "Participants" },
-                  { value: "48hrs", label: "Non-stop Coding" },
-                  { value: "NPR 1.3 lakh+", label: "Prize Pool" },
+                  { value: participantsLabel, label: "Participants" },
+                  { value: durationLabel, label: "Non-stop Coding" },
+                  { value: prizePool, label: "Prize Pool" },
                 ].map((stat) => (
                   <div key={stat.label} className="flex flex-col">
                     <span className="text-xl font-black text-yellow-400">{stat.value}</span>
@@ -193,7 +204,11 @@ export default function Hero() {
         </div>
       </section>
 
-      <RegistrationModal open={regOpen} onClose={() => setRegOpen(false)} />
+      <RegistrationModal
+        open={regOpen}
+        onClose={() => setRegOpen(false)}
+        registrationThemes={registrationThemes}
+      />
     </>
   );
 }

@@ -21,10 +21,19 @@ export default function Footer() {
           {/* Links */}
           <div className="flex flex-col gap-3">
             <h4 className="text-white font-semibold text-sm">Quick Links</h4>
-            {["About", "Problem Themes", "Schedule", "Prizes", "FAQs"].map(link => (
-              <a key={link} href={`#${link.toLowerCase().replace(" ", "-")}`}
-                className="text-[#A3A3A3] text-xs hover:text-yellow-400 transition-colors w-fit">
-                {link}
+            {[
+              { label: "About", href: "#about" },
+              { label: "Themes", href: "#themes" },
+              { label: "Schedule", href: "#schedule" },
+              { label: "Prizes", href: "#prizes" },
+              { label: "FAQs", href: "#faqs" },
+            ].map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-[#A3A3A3] text-xs hover:text-yellow-400 transition-colors w-fit"
+              >
+                {link.label}
               </a>
             ))}
           </div>
@@ -40,11 +49,7 @@ export default function Footer() {
                 </a>
               ))}
             </div>
-            <p className="text-[#A3A3A3] text-xs mt-2">
-              <a href="mailto:hello@cipherschools.com" className="hover:text-yellow-400 transition-colors">
-                LEC-HACKS
-              </a>
-            </p>
+            <p className="text-[#A3A3A3] text-xs mt-2">LEC-HACKS · LEMSC, Rupandehi</p>
           </div>
         </div>
 

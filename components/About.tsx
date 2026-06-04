@@ -3,12 +3,12 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Clock } from "lucide-react";
-import { HACKATHON_DATE } from "@/app/constants";
 
-function useCountdown(target: Date) {
+function useCountdown(isoDate: string) {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, mins: 0, secs: 0 });
 
   useEffect(() => {
+    const target = new Date(isoDate);
     const tick = () => {
       const now = new Date().getTime();
       const diff = target.getTime() - now;
@@ -26,7 +26,7 @@ function useCountdown(target: Date) {
     tick();
     const id = setInterval(tick, 1000);
     return () => clearInterval(id);
-  }, [target]);
+  }, [isoDate]);
 
   return timeLeft;
 }
@@ -45,8 +45,16 @@ function CountdownUnit({ value, label }: { value: number; label: string }) {
   );
 }
 
-export default function About() {
-  const timeLeft = useCountdown(HACKATHON_DATE);
+export default function About({
+  hackathonDate,
+  venueName,
+  venueAddress,
+}: {
+  hackathonDate: string;
+  venueName: string;
+  venueAddress: string;
+}) {
+  const timeLeft = useCountdown(hackathonDate);
 
   return (
     <section id="about" className="py-24 relative overflow-hidden">
@@ -124,11 +132,8 @@ export default function About() {
               <MapPin size={18} className="text-yellow-400 mt-0.5 shrink-0" />
               <div>
                 <p className="text-xs text-[#A3A3A3] uppercase tracking-wider mb-1">Venue</p>
-                <p className="text-white font-semibold text-sm">
-                  Lumbini Engineering Management  &amp; Science college  {" "}
-                  <span className="text-yellow-400"></span>
-                </p>
-                <p className="text-[#A3A3A3] text-xs mt-0.5"> Tilottama-7,Rupandehi,Nepal</p>
+                <p className="text-white font-semibold text-sm">{venueName}</p>
+                <p className="text-[#A3A3A3] text-xs mt-0.5">{venueAddress}</p>
               </div>
             </div>
 
