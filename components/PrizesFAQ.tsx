@@ -63,59 +63,34 @@ function PrizeCard() {
 }
 
 function PrizeMoney({ prizePool }: { prizePool: string }) {
-  const prizes = [
-    { amount: prizePool, label: "Total prize pool" },
-    
-    // { place: "", amount: "₹3,000", label: "Second Prize" },
-    // { place: "", amount: "₹2,000", label: "Third Prize" },
-  ];
-
   return (
     <div className="flex flex-col gap-4">
-      {prizes.map((prize, i) => (
-        <motion.div
-          key={prize.label}
-          initial={{ opacity: 0, x: 20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: i * 0.1 }}
-          className="relative bg-[#1a1a1a] border border-yellow-400/20 rounded-3xl p-8 h-full min-h-[495px] flex flex-col justify-center overflow-hidden group hover:border-yellow-400/40 transition-all duration-300"
+      <motion.div
+        initial={{ opacity: 0, x: 20 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
+        className="relative bg-[#1a1a1a] border border-yellow-400/20 rounded-3xl p-8 h-full min-h-[320px] flex flex-col justify-center overflow-hidden group hover:border-yellow-400/40 transition-all duration-300"
+      >
+        <p className="text-[#A3A3A3] text-sm uppercase tracking-[0.25em] mb-4">
+          Total prize pool
+        </p>
+        <span
+          className="text-5xl sm:text-6xl font-black leading-none"
+          style={{
+            background: "linear-gradient(135deg, #FACC15, #84cc16)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+          }}
         >
-          {/* Rank badge */}
-          {/* <div className={`absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center text-xs font-black ${
-            i === 0 ? "bg-yellow-400/20 text-yellow-400" :
-            i === 1 ? "bg-gray-400/20 text-gray-300" :
-            "bg-orange-700/20 text-orange-600"
-          }`}>
-            {prize.place}
-          </div> */}
-
-    <p className="text-[#A3A3A3] text-sm uppercase tracking-[0.25em] mb-4">
-  {prize.label}
-</p>
-
-<span
-  className="text-5xl sm:text-6xl font-black leading-none"
-  style={{
-    background: "linear-gradient(135deg, #FACC15, #84cc16)",
-    WebkitBackgroundClip: "text",
-    WebkitTextFillColor: "transparent",
-    backgroundClip: "text",
-  }}
->
-  {prize.amount}
-</span>
-
-<p className="text-gray-400 text-sm mt-4 leading-relaxed max-w-sm">
-  Cash prizes, gadgets, internship opportunities,
-  certificates and exclusive sponsor rewards.
-</p>
-
-          {/* Subtle glow */}
-          <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${i === 0 ? "bg-yellow-400/3" : "bg-white/2"
-            } pointer-events-none`} />
-        </motion.div>
-      ))}
+          {prizePool}
+        </span>
+        <p className="text-gray-400 text-sm mt-4 leading-relaxed max-w-sm">
+          Cash prizes, gadgets, internship opportunities, certificates and
+          exclusive sponsor rewards.
+        </p>
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-yellow-400/3 pointer-events-none" />
+      </motion.div>
     </div>
   );
 }

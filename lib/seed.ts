@@ -1,5 +1,6 @@
 import { requireSql } from "@/lib/sql";
 import { getDefaultSiteContent } from "@/lib/defaults";
+import { siteSettingsToDbEntries } from "@/lib/site-settings";
 
 export async function seedDatabase(): Promise<{ message: string }> {
   const sql = requireSql();
@@ -61,15 +62,7 @@ export async function seedDatabase(): Promise<{ message: string }> {
   }
 
   const { settings } = content;
-  const settingsEntries: [string, string][] = [
-    ["hackathon_date", settings.hackathonDate],
-    ["schedule_date_label", settings.scheduleDateLabel],
-    ["prize_pool", settings.prizePool],
-    ["participants_label", settings.participantsLabel],
-    ["duration_label", settings.durationLabel],
-    ["venue_name", settings.venueName],
-    ["venue_address", settings.venueAddress],
-  ];
+  const settingsEntries = siteSettingsToDbEntries(settings);
 
   for (const [key, value] of settingsEntries) {
     await sql`

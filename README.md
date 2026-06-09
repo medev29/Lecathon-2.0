@@ -64,9 +64,24 @@ npm run dev
 | `/admin/themes` | Problem themes |
 | `/admin/schedule` | Lecaweek & hackathon schedule |
 | `/admin/faqs` | FAQ entries |
-| `/admin/settings` | Event date, venue, hero stats, prize pool |
+| `/admin/settings` | Event date, venue, registration controls, social links, email test |
 
 Public site at `/` reads content from the database when CMS tables are populated.
+
+### Registration controls (Admin → Site Settings)
+
+- **Registration open** — toggle sign-ups on/off
+- **Deadline** — auto-close after an ISO date/time
+- **Max teams** — cap registrations (`0` = unlimited)
+- **Closed message** — shown on the site when registration is closed
+
+Duplicate team names and emails are blocked automatically.
+
+### After first deploy
+
+1. Set `NEXT_PUBLIC_SITE_URL` to your Vercel URL (for SEO / share previews).
+2. Run the new `security_events` section in `db/schema.sql` in Neon (rate limiting).
+3. In admin settings, add social links and test email.
 
 ## Scripts
 
@@ -74,3 +89,4 @@ Public site at `/` reads content from the database when CMS tables are populated
 - `npm run build` — production build
 - `npm run start` — production server
 - `npm run lint` — ESLint
+- `npm test` — registration validation tests

@@ -3,15 +3,18 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Lightbulb, ArrowRight } from "lucide-react";
-import type { ProblemTheme } from "@/lib/types/site";
+import type { ProblemTheme, RegistrationAvailability } from "@/lib/types/site";
 import RegistrationModal from "./RegistrationModal";
+import RegisterButton from "./RegisterButton";
 
 export default function ProblemThemes({
   problemThemes,
   registrationThemes,
+  registration,
 }: {
   problemThemes: ProblemTheme[];
   registrationThemes: string[];
+  registration: RegistrationAvailability;
 }) {
   const [startIdx, setStartIdx] = useState(0);
   const [regOpen, setRegOpen] = useState(false);
@@ -121,12 +124,14 @@ export default function ProblemThemes({
                 <p className="text-[#A3A3A3] text-xs mt-0.5">Pick a theme and start building something that matters.</p>
               </div>
             </div>
-            <button
-              onClick={() => setRegOpen(true)}
-              className="shrink-0 px-6 py-2.5 bg-yellow-400 text-black font-bold rounded-full text-sm hover:bg-yellow-300 transition-all shadow-lg shadow-yellow-400/20 whitespace-nowrap"
+            <RegisterButton
+              variant="themes"
+              registration={registration}
+              onOpen={() => setRegOpen(true)}
+              className="shrink-0 whitespace-nowrap"
             >
-              Register Now
-            </button>
+              {registration.open ? "Register Now" : "Registration Closed"}
+            </RegisterButton>
           </motion.div>
         </div>
       </section>
@@ -135,6 +140,7 @@ export default function ProblemThemes({
         open={regOpen}
         onClose={() => setRegOpen(false)}
         registrationThemes={registrationThemes}
+        registration={registration}
       />
     </>
   );

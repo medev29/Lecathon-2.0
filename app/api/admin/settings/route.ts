@@ -20,15 +20,7 @@ export async function GET() {
 export async function PATCH(req: NextRequest) {
   try {
     const body = await req.json();
-    await updateSiteSettings({
-      hackathonDate: body.hackathonDate,
-      scheduleDateLabel: body.scheduleDateLabel,
-      prizePool: body.prizePool,
-      participantsLabel: body.participantsLabel,
-      durationLabel: body.durationLabel,
-      venueName: body.venueName,
-      venueAddress: body.venueAddress,
-    });
+    await updateSiteSettings(body);
     revalidatePublicSite();
     const settings = await fetchSettingsFromDb();
     return NextResponse.json({ success: true, data: settings });

@@ -1,10 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { saveRegistration } from "@/lib/db";
 import { getEmailProviderLabel, sendRegistrationEmails } from "@/lib/email";
+import { assertCanRegister } from "@/lib/registration-guards";
 import {
   validateRegistration,
   type RegistrationPayload,
 } from "@/lib/registration";
+import { revalidatePublicSite } from "@/lib/revalidate-site";
 
 export async function POST(req: NextRequest) {
   try {
@@ -19,6 +21,15 @@ export async function POST(req: NextRequest) {
     }
 
     const { data } = result;
+
+    const guard = await assertCanRegister(req, data);
+    if (!guard.ok) {
+      return NextResponse.json(
+        { success: false, message: guard.message },
+        { status: guard.status }
+      );
+    }
+
     let id: string;
 
     try {
@@ -42,6 +53,8 @@ export async function POST(req: NextRequest) {
         { status: 503 }
       );
     }
+
+    revalidatePublicSite();
 
     sendRegistrationEmails(data, id)
       .then((results) => {

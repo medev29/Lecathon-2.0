@@ -4,12 +4,16 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { navLinks } from "@/app/constants";
+import type { RegistrationAvailability } from "@/lib/types/site";
 import RegistrationModal from "./RegistrationModal";
+import RegisterButton from "./RegisterButton";
 
 export default function Navbar({
   registrationThemes,
+  registration,
 }: {
   registrationThemes: string[];
+  registration: RegistrationAvailability;
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [regOpen, setRegOpen] = useState(false);
@@ -19,7 +23,6 @@ export default function Navbar({
       <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0a0a0a]/80 backdrop-blur-md border-b border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            {/* Logo */}
             <div className="flex flex-col leading-tight">
               <span className="text-white font-bold text-lg tracking-wide">
                 LECA<span className="text-yellow-400">THON 2.0</span>
@@ -29,7 +32,6 @@ export default function Navbar({
               </span>
             </div>
 
-            {/* Desktop Nav Links */}
             <div className="hidden md:flex items-center gap-8">
               {navLinks.map((link) => (
                 <a
@@ -42,27 +44,27 @@ export default function Navbar({
               ))}
             </div>
 
-            {/* Desktop CTA */}
             <div className="hidden md:flex items-center gap-3">
-              <button
-                onClick={() => setRegOpen(true)}
-                className="px-5 py-2 text-sm font-semibold text-yellow-400 border border-yellow-400 rounded-full hover:bg-yellow-400/10 transition-all duration-200"
+              <RegisterButton
+                variant="nav"
+                registration={registration}
+                onOpen={() => setRegOpen(true)}
               >
-                Registration
-              </button>
+                {registration.open ? "Registration" : "Closed"}
+              </RegisterButton>
             </div>
 
-            {/* Mobile Menu Toggle */}
             <button
+              type="button"
               className="md:hidden text-white"
               onClick={() => setMenuOpen(!menuOpen)}
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
             >
               {menuOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
         </div>
 
-        {/* Mobile Menu */}
         <AnimatePresence>
           {menuOpen && (
             <motion.div
@@ -82,12 +84,17 @@ export default function Navbar({
                     {link.label}
                   </a>
                 ))}
-                <button
-                  onClick={() => { setRegOpen(true); setMenuOpen(false); }}
-                  className="w-full px-5 py-2 text-sm font-semibold text-yellow-400 border border-yellow-400 rounded-full hover:bg-yellow-400/10 transition-all"
+                <RegisterButton
+                  variant="nav"
+                  registration={registration}
+                  onOpen={() => {
+                    setRegOpen(true);
+                    setMenuOpen(false);
+                  }}
+                  className="w-full"
                 >
-                  Registration
-                </button>
+                  {registration.open ? "Registration" : "Registration Closed"}
+                </RegisterButton>
               </div>
             </motion.div>
           )}
@@ -98,6 +105,7 @@ export default function Navbar({
         open={regOpen}
         onClose={() => setRegOpen(false)}
         registrationThemes={registrationThemes}
+        registration={registration}
       />
     </>
   );

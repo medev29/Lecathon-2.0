@@ -3,18 +3,22 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, FileText, Monitor, Cpu, Globe, Zap } from "lucide-react";
+import type { RegistrationAvailability } from "@/lib/types/site";
 import RegistrationModal from "./RegistrationModal";
+import RegisterButton from "./RegisterButton";
 
 export default function Hero({
   registrationThemes,
   participantsLabel,
   durationLabel,
   prizePool,
+  registration,
 }: {
   registrationThemes: string[];
   participantsLabel: string;
   durationLabel: string;
   prizePool: string;
+  registration: RegistrationAvailability;
 }) {
   const [regOpen, setRegOpen] = useState(false);
 
@@ -90,14 +94,19 @@ export default function Hero({
 
               {/* CTA Buttons */}
               <div className="flex flex-wrap gap-4 pt-2">
-                <motion.button
-                  whileHover={{ scale: 1.04 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => setRegOpen(true)}
-                  className="flex items-center gap-2 px-7 py-3 bg-yellow-400 text-black font-bold rounded-full text-sm hover:bg-yellow-300 transition-all shadow-lg shadow-yellow-400/20"
+                <RegisterButton
+                  variant="hero"
+                  registration={registration}
+                  onOpen={() => setRegOpen(true)}
                 >
-                  Register Now <ArrowRight size={16} />
-                </motion.button>
+                  {registration.open ? (
+                    <>
+                      Register Now <ArrowRight size={16} />
+                    </>
+                  ) : (
+                    "Registration Closed"
+                  )}
+                </RegisterButton>
                 <motion.a
                   href="#themes"
                   whileHover={{ scale: 1.04 }}
@@ -112,7 +121,16 @@ export default function Hero({
               {/* Stats */}
               <div className="flex gap-8 pt-4 border-t border-white/5">
                 {[
-                  { value: participantsLabel, label: "Participants" },
+                  {
+                    value:
+                      registration.teamCount > 0
+                        ? String(registration.teamCount)
+                        : participantsLabel,
+                    label:
+                      registration.teamCount > 0
+                        ? "Teams Registered"
+                        : "Participants",
+                  },
                   { value: durationLabel, label: "Non-stop Coding" },
                   { value: prizePool, label: "Prize Pool" },
                 ].map((stat) => (
@@ -208,6 +226,7 @@ export default function Hero({
         open={regOpen}
         onClose={() => setRegOpen(false)}
         registrationThemes={registrationThemes}
+        registration={registration}
       />
     </>
   );

@@ -3,10 +3,13 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, CheckCircle, Loader2 } from "lucide-react";
+import type { RegistrationAvailability } from "@/lib/types/site";
+
 interface Props {
   open: boolean;
   onClose: () => void;
   registrationThemes: string[];
+  registration: RegistrationAvailability;
 }
 
 const emptyMember = { name: "", email: "" };
@@ -15,6 +18,7 @@ export default function RegistrationModal({
   open,
   onClose,
   registrationThemes,
+  registration,
 }: Props) {
   const [form, setForm] = useState({
     name: "",
@@ -118,6 +122,16 @@ export default function RegistrationModal({
                   Close
                 </button>
               </div>
+            ) : !registration.open ? (
+              <div className="py-8 text-center">
+                <h2 className="text-xl font-bold text-white mb-3">
+                  Registration Closed
+                </h2>
+                <p className="text-[#A3A3A3] text-sm">
+                  {registration.reason ??
+                    "Registration is not open at the moment."}
+                </p>
+              </div>
             ) : (
               <>
                 <div className="mb-6">
@@ -127,6 +141,13 @@ export default function RegistrationModal({
                   </h2>
                   <p className="text-[#A3A3A3] text-sm mt-1">
                     Fill in your details to secure your spot.
+                    {registration.spotsLeft !== undefined &&
+                    registration.spotsLeft > 0 ? (
+                      <span className="block text-yellow-400/80 mt-1">
+                        {registration.spotsLeft} spot
+                        {registration.spotsLeft === 1 ? "" : "s"} remaining
+                      </span>
+                    ) : null}
                   </p>
                 </div>
 

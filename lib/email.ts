@@ -205,6 +205,34 @@ export function getEmailProviderLabel(): string {
   return "disabled";
 }
 
+export async function sendTestEmail(): Promise<SendResult> {
+  const shared = getSharedConfig();
+  if (!getProvider() || !shared) {
+    return {
+      ok: false,
+      error:
+        "Email not configured. Set SMTP_USER, SMTP_PASS, EMAIL_FROM, and ADMIN_NOTIFICATION_EMAIL.",
+    };
+  }
+
+  const adminTo = shared.adminTo
+    .split(",")
+    .map((e) => e.trim())
+    .filter(Boolean);
+
+  return sendEmail({
+    to: adminTo,
+    subject: "[Lecathon] Test email from admin",
+    html: `
+      <div style="font-family:sans-serif;max-width:560px;color:#111;">
+        <h2>Lecathon 2.0 — Email test</h2>
+        <p>If you received this, your SMTP configuration is working.</p>
+        <p style="font-size:12px;color:#666;">Sent from the admin dashboard.</p>
+      </div>
+    `,
+  });
+}
+
 export async function sendRegistrationEmails(
   data: ValidatedRegistration,
   registrationId: string

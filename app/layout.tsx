@@ -1,15 +1,42 @@
 import type { Metadata } from "next";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
+  display: "swap",
+});
+
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
+  "https://lecathon-2-0.vercel.app";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: "Lecathon 2.0 — Hack. Build. Innovate.",
   description:
-    "Join Lecathon 2.0, the flagship hackathon by LEC-HACKS. Build innovative solutions, win prizes, and launch your career.",
-  keywords: ["hackathon", "Lecathon", "LEC-HACKS", "tech", "innovation", ""],
+    "Join Lecathon 2.0, the flagship hackathon by LEC-HACKS at LEMSC. Build innovative solutions, win prizes, and launch your career.",
+  keywords: [
+    "hackathon",
+    "Lecathon",
+    "LEC-HACKS",
+    "LEMSC",
+    "Nepal",
+    "innovation",
+  ],
   openGraph: {
     title: "Lecathon 2.0",
-    description: "Learn, Build, Innovate — Join the most exciting hackathon of 2026.",
+    description:
+      "Learn, Build, Innovate — Join the most exciting hackathon of 2026.",
     type: "website",
+    url: siteUrl,
+    siteName: "Lecathon 2.0",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Lecathon 2.0",
+    description: "Flagship hackathon by LEC-HACKS at LEMSC.",
   },
 };
 
@@ -20,13 +47,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth" data-scroll-behavior="smooth">
-      <head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
-          rel="stylesheet"
-        />
-      </head>
-      <body className="antialiased">{children}</body>
+      <body className={`${poppins.className} antialiased`}>{children}</body>
     </html>
   );
 }

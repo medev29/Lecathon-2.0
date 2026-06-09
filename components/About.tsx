@@ -134,6 +134,16 @@ export default function About({
                 <p className="text-xs text-[#A3A3A3] uppercase tracking-wider mb-1">Venue</p>
                 <p className="text-white font-semibold text-sm">{venueName}</p>
                 <p className="text-[#A3A3A3] text-xs mt-0.5">{venueAddress}</p>
+                {venueAddress ? (
+                  <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${venueName}, ${venueAddress}`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-yellow-400 text-xs mt-2 inline-block hover:text-yellow-300"
+                  >
+                    View on Google Maps →
+                  </a>
+                ) : null}
               </div>
             </div>
 

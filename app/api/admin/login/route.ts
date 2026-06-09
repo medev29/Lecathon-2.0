@@ -5,6 +5,13 @@ import {
   getAdminSessionCookieOptions,
   verifyAdminPassword,
 } from "@/lib/admin-auth";
+import {
+  checkLoginRateLimit,
+  getClientIp,
+  recordLoginAttempt,
+} from "@/lib/security";
+
+export const dynamic = "force-dynamic";
 
 export async function POST(req: NextRequest) {
   try {
@@ -26,7 +33,19 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const ip = getClientIp(req);
+    if (await checkLoginRateLimit(ip)) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Too many login attempts. Try again in 15 minutes.",
+        },
+        { status: 429 }
+      );
+    }
+
     if (!verifyAdminPassword(password)) {
+      await recordLoginAttempt(ip);
       return NextResponse.json(
         { success: false, message: "Invalid password." },
         { status: 401 }

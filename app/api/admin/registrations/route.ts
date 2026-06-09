@@ -8,7 +8,9 @@ export const dynamic = "force-dynamic";
 
 export async function GET(req: NextRequest) {
   try {
-    const rows = await listRegistrations();
+    const q = req.nextUrl.searchParams.get("q") ?? undefined;
+    const theme = req.nextUrl.searchParams.get("theme") ?? undefined;
+    const rows = await listRegistrations({ q, theme });
     const format = req.nextUrl.searchParams.get("format");
 
     if (format === "csv") {

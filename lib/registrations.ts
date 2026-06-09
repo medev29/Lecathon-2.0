@@ -45,14 +45,41 @@ function mapRow(row: RegistrationDbRow): RegistrationRow {
   };
 }
 
-export async function listRegistrations(): Promise<RegistrationRow[]> {
+export async function listRegistrations(options?: {
+  q?: string;
+  theme?: string;
+}): Promise<RegistrationRow[]> {
   const sql = requireSql();
-  const rows = await sql`
-    SELECT *
-    FROM registrations
-    ORDER BY registered_at DESC
-  `;
-  return (rows as RegistrationDbRow[]).map(mapRow);
+  const q = options?.q?.trim().toLowerCase();
+  const theme = options?.theme?.trim();
+
+  const rows =
+    theme && theme !== "all"
+      ? await sql`
+          SELECT *
+          FROM registrations
+          WHERE theme = ${theme}
+          ORDER BY registered_at DESC
+        `
+      : await sql`
+          SELECT *
+          FROM registrations
+          ORDER BY registered_at DESC
+        `;
+
+  let mapped = (rows as RegistrationDbRow[]).map(mapRow);
+
+  if (q) {
+    mapped = mapped.filter(
+      (row) =>
+        row.teamName.toLowerCase().includes(q) ||
+        row.teamLeaderName.toLowerCase().includes(q) ||
+        row.teamLeaderEmail.toLowerCase().includes(q) ||
+        row.college.toLowerCase().includes(q)
+    );
+  }
+
+  return mapped;
 }
 
 export function registrationsToCsv(rows: RegistrationRow[]): string {

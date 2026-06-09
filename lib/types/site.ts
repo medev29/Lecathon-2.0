@@ -39,6 +39,22 @@ export type SiteSettings = {
   durationLabel: string;
   venueName: string;
   venueAddress: string;
+  registrationOpen: boolean;
+  registrationDeadline: string;
+  maxTeams: number;
+  registrationClosedMessage: string;
+  socialGithub: string;
+  socialInstagram: string;
+  socialFacebook: string;
+  socialWebsite: string;
+  contactEmail: string;
+};
+
+export type RegistrationAvailability = {
+  open: boolean;
+  reason?: string;
+  spotsLeft?: number;
+  teamCount: number;
 };
 
 export type SiteContent = {
@@ -49,6 +65,7 @@ export type SiteContent = {
   hackathonSchedule: ScheduleItem[];
   settings: SiteSettings;
   registrationThemes: string[];
+  registration: RegistrationAvailability;
 };
 
 export type RegistrationRow = {

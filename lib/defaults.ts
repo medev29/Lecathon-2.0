@@ -16,6 +16,16 @@ export const defaultSettings: SiteSettings = {
   venueName:
     "Lumbini Engineering Management & Science college",
   venueAddress: "Tilottama-7, Rupandehi, Nepal",
+  registrationOpen: true,
+  registrationDeadline: "",
+  maxTeams: 0,
+  registrationClosedMessage:
+    "Registration is closed. Follow LEC-HACKS for updates.",
+  socialGithub: "",
+  socialInstagram: "",
+  socialFacebook: "",
+  socialWebsite: "",
+  contactEmail: "",
 };
 
 export function getDefaultSiteContent(): SiteContent {
@@ -62,5 +72,9 @@ export function getDefaultSiteContent(): SiteContent {
       ...problemThemes.map((t) => t.title.trim()),
       "Other",
     ],
+    registration: {
+      open: true,
+      teamCount: 0,
+    },
   };
 }

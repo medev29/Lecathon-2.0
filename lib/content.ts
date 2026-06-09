@@ -1,5 +1,11 @@
 import { getSql } from "@/lib/sql";
 import { getDefaultSiteContent } from "@/lib/defaults";
+import { countRegistrations } from "@/lib/db";
+import {
+  isRegistrationOpenBySettings,
+  parseSiteSettings,
+  siteSettingsToDbEntries,
+} from "@/lib/site-settings";
 import type {
   Faq,
   ProblemTheme,
@@ -94,17 +100,7 @@ async function fetchSettings(sql: ReturnType<typeof getSql>): Promise<SiteSettin
     (rows as { key: string; value: string }[]).map((r) => [r.key, r.value])
   );
 
-  return {
-    hackathonDate: map.get("hackathon_date") ?? defaults.hackathonDate,
-    scheduleDateLabel:
-      map.get("schedule_date_label") ?? defaults.scheduleDateLabel,
-    prizePool: map.get("prize_pool") ?? defaults.prizePool,
-    participantsLabel:
-      map.get("participants_label") ?? defaults.participantsLabel,
-    durationLabel: map.get("duration_label") ?? defaults.durationLabel,
-    venueName: map.get("venue_name") ?? defaults.venueName,
-    venueAddress: map.get("venue_address") ?? defaults.venueAddress,
-  };
+  return parseSiteSettings(map);
 }
 
 export async function getSiteContent(): Promise<SiteContent> {
@@ -116,13 +112,14 @@ export async function getSiteContent(): Promise<SiteContent> {
   }
 
   try {
-    const [sponsorRows, themeRows, faqRows, scheduleRows, settings] =
+    const [sponsorRows, themeRows, faqRows, scheduleRows, settings, teamCount] =
       await Promise.all([
         sql`SELECT * FROM sponsors ORDER BY sort_order ASC, id ASC`,
         sql`SELECT * FROM problem_themes ORDER BY sort_order ASC, id ASC`,
         sql`SELECT * FROM faqs ORDER BY sort_order ASC, id ASC`,
         sql`SELECT * FROM schedule_items ORDER BY sort_order ASC, id ASC`,
         fetchSettings(sql),
+        countRegistrations(),
       ]);
 
     const sponsors = (sponsorRows as SponsorRow[]).map(mapSponsor);
@@ -157,6 +154,10 @@ export async function getSiteContent(): Promise<SiteContent> {
         ...themesForRegistration.map((t) => t.title),
         "Other",
       ],
+      registration: {
+        ...isRegistrationOpenBySettings(settings, teamCount),
+        teamCount,
+      },
     };
   } catch (error) {
     console.error("[getSiteContent] Database fetch failed:", error);
@@ -172,15 +173,7 @@ export async function updateSiteSettings(
     throw new Error("DATABASE_URL is not configured.");
   }
 
-  const entries: [string, string | undefined][] = [
-    ["hackathon_date", settings.hackathonDate],
-    ["schedule_date_label", settings.scheduleDateLabel],
-    ["prize_pool", settings.prizePool],
-    ["participants_label", settings.participantsLabel],
-    ["duration_label", settings.durationLabel],
-    ["venue_name", settings.venueName],
-    ["venue_address", settings.venueAddress],
-  ];
+  const entries = siteSettingsToDbEntries(settings);
 
   for (const [key, value] of entries) {
     if (value === undefined) {

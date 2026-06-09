@@ -1,16 +1,35 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import AdminShell from "@/components/admin/AdminShell";
 import { useAdminResource } from "@/components/admin/useAdminResource";
-import { AdminButton, AdminCard } from "@/components/admin/admin-ui";
+import { AdminButton, AdminCard, AdminInput } from "@/components/admin/admin-ui";
 import type { RegistrationRow } from "@/lib/types/site";
 import { ChevronDown, ChevronRight } from "lucide-react";
 
 export default function AdminRegistrationsPage() {
-  const { items: rows, loading, msg, setMsg, load } =
-    useAdminResource<RegistrationRow>("/api/admin/registrations");
+  const [search, setSearch] = useState("");
+  const [theme, setTheme] = useState("all");
   const [expanded, setExpanded] = useState<number | null>(null);
+
+  const url = useMemo(() => {
+    const params = new URLSearchParams();
+    if (search.trim()) params.set("q", search.trim());
+    if (theme !== "all") params.set("theme", theme);
+    const qs = params.toString();
+    return `/api/admin/registrations${qs ? `?${qs}` : ""}`;
+  }, [search, theme]);
+
+  const { items: rows, loading, msg, setMsg, load } =
+    useAdminResource<RegistrationRow>(url);
+
+  const themes = useMemo(
+    () =>
+      Array.from(
+        new Set(rows.map((r) => r.theme).filter(Boolean) as string[])
+      ).sort(),
+    [rows]
+  );
 
   const toggle = (id: number) => {
     setExpanded((prev) => (prev === id ? null : id));
@@ -19,8 +38,33 @@ export default function AdminRegistrationsPage() {
   return (
     <AdminShell
       title="Registrations"
-      description={`${rows.length} team${rows.length === 1 ? "" : "s"} registered.`}
+      description={`${rows.length} team${rows.length === 1 ? "" : "s"} shown.`}
     >
+      <div className="flex flex-col sm:flex-row gap-3 mb-6">
+        <AdminInput
+          label="Search teams"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Team name, leader, email, college…"
+          className="flex-1"
+        />
+        <label className="block sm:w-48">
+          <span className="text-xs text-[#888] mb-1 block">Theme</span>
+          <select
+            value={theme}
+            onChange={(e) => setTheme(e.target.value)}
+            className="w-full bg-[#111] border border-white/10 rounded-lg px-3 py-2 text-sm text-white"
+          >
+            <option value="all">All themes</option>
+            {themes.map((t) => (
+              <option key={t} value={t}>
+                {t}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+
       <div className="flex gap-3 mb-6">
         <a href="/api/admin/registrations?format=csv">
           <AdminButton type="button">Download CSV</AdminButton>
@@ -36,7 +80,7 @@ export default function AdminRegistrationsPage() {
         {loading ? (
           <p className="p-5 text-sm text-[#888]">Loading…</p>
         ) : rows.length === 0 ? (
-          <p className="p-5 text-sm text-[#888]">No registrations yet.</p>
+          <p className="p-5 text-sm text-[#888]">No registrations match your filters.</p>
         ) : (
           <ul>
             {rows.map((row) => {
