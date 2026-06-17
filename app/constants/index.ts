@@ -1,3 +1,6 @@
+export const ORGANIZER_NAME =
+  "Robotics Club of Lumbini Engineering Management & Science College";
+
 export const navLinks = [
   { label: "About", href: "#about" },
   { label: "Themes", href: "#themes" },
@@ -59,7 +62,8 @@ export const lecaWeekSchedule = [
   {
     time: "10:00 - 11:00",
     phase: "Opening Ceremony",
-    description: "Welcome address & event kickoff by LEC-HACKS team",
+    description:
+      "Welcome address & event kickoff by Robotics Club of Lumbini Engineering Management & Science College team",
   },
   {
     time: "11:00 - 13:00",

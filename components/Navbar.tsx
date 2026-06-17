@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { navLinks } from "@/app/constants";
+import { navLinks, ORGANIZER_NAME } from "@/app/constants";
 import type { RegistrationAvailability } from "@/lib/types/site";
 import RegistrationModal from "./RegistrationModal";
 import RegisterButton from "./RegisterButton";
@@ -27,8 +27,8 @@ export default function Navbar({
               <span className="text-white font-bold text-lg tracking-wide">
                 LECA<span className="text-yellow-400">THON 2.0</span>
               </span>
-              <span className="text-[10px] text-[#A3A3A3] tracking-widest uppercase">
-                by LEC-HACKS
+              <span className="text-[10px] text-[#A3A3A3] tracking-wide leading-snug max-w-[220px] sm:max-w-none">
+                by {ORGANIZER_NAME}
               </span>
             </div>
 

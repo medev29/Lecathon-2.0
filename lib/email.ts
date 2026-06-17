@@ -1,4 +1,5 @@
 import nodemailer from "nodemailer";
+import { ORGANIZER_NAME } from "@/app/constants";
 import type { ValidatedRegistration } from "@/lib/registration";
 
 type SendResult = { ok: true } | { ok: false; error: string };
@@ -189,7 +190,7 @@ function confirmationHtml(
       <p style="margin:0 0 8px;"><strong>College:</strong> ${escapeHtml(data.college)}</p>
       <p style="margin:0 0 8px;"><strong>Preferred theme:</strong> ${escapeHtml(data.theme || "Not selected")}</p>
       <p>We'll send event details and next steps to this email soon. Keep an eye on your inbox.</p>
-      <p style="margin:24px 0 0;font-size:12px;color:#666;">— LEC-HACKS · Lecathon 2.0</p>
+      <p style="margin:24px 0 0;font-size:12px;color:#666;">— ${ORGANIZER_NAME} · Lecathon 2.0</p>
     </div>
   `;
 }

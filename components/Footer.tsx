@@ -1,6 +1,7 @@
 "use client";
 
 import { Heart, GitBranch, Globe, Link, Mail, Send } from "lucide-react";
+import { ORGANIZER_NAME } from "@/app/constants";
 import type { SiteSettings } from "@/lib/types/site";
 
 export default function Footer({ settings }: { settings: SiteSettings }) {
@@ -20,8 +21,8 @@ export default function Footer({ settings }: { settings: SiteSettings }) {
               <span className="text-white font-bold text-lg">
                 Leca<span className="text-yellow-400">thon 2.0</span>
               </span>
-              <p className="text-[10px] text-[#A3A3A3] tracking-widest uppercase">
-                by LEC-HACKS
+              <p className="text-[10px] text-[#A3A3A3] tracking-wide leading-snug">
+                by {ORGANIZER_NAME}
               </p>
             </div>
             <p className="text-[#A3A3A3] text-xs leading-relaxed max-w-xs">
@@ -81,7 +82,7 @@ export default function Footer({ settings }: { settings: SiteSettings }) {
               </a>
             ) : null}
             <p className="text-[#A3A3A3] text-xs mt-1">
-              LEC-HACKS · LEMSC, Rupandehi
+              {ORGANIZER_NAME} · LEMSC, Rupandehi
             </p>
           </div>
         </div>
@@ -91,8 +92,8 @@ export default function Footer({ settings }: { settings: SiteSettings }) {
             © 2026 Lecathon 2.0. All rights reserved.
           </p>
           <p className="text-[#A3A3A3] text-xs flex items-center gap-1">
-            Built with <Heart size={10} className="text-yellow-400" /> by
-            LEC-HACKS
+            Built with <Heart size={10} className="text-yellow-400" /> by{" "}
+            {ORGANIZER_NAME}
           </p>
         </div>
       </div>

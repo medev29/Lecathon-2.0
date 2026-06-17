@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Clock, Calendar } from "lucide-react";
 import type { ScheduleItem as ScheduleItemType } from "@/lib/types/site";
+import { ORGANIZER_NAME } from "@/app/constants";
 
 type ScheduleItem = { time: string; phase: string; description: string };
 
@@ -115,8 +116,8 @@ export default function Schedule({
 
         {schedule.length === 0 ? (
           <p className="text-center text-[#888] text-sm py-8">
-            Schedule details will be posted soon. Check back later or contact
-            LEC-HACKS.
+            Schedule details will be posted soon. Check back later or contact{" "}
+            {ORGANIZER_NAME}.
           </p>
         ) : (
           <AnimatePresence mode="wait">

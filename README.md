@@ -1,6 +1,6 @@
 # Lecathon 2.0
 
-Landing page and CMS for the LEC-HACKS hackathon at LEMSC.
+Landing page and CMS for the Robotics Club of Lumbini Engineering Management & Science College hackathon at LEMSC.
 
 ## Setup
 

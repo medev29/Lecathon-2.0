@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { ORGANIZER_NAME } from "@/app/constants";
 
 export const alt = "Lecathon 2.0 — Hack. Build. Innovate.";
 export const size = { width: 1200, height: 630 };
@@ -22,17 +23,20 @@ export default function OpenGraphImage() {
       >
         <div
           style={{
-            fontSize: 28,
+            display: "flex",
+            fontSize: 18,
             color: "#FACC15",
-            letterSpacing: 4,
-            textTransform: "uppercase",
+            letterSpacing: 1,
             marginBottom: 24,
+            maxWidth: 900,
+            lineHeight: 1.3,
           }}
         >
-          LEC-HACKS presents
+          {`${ORGANIZER_NAME} presents`}
         </div>
         <div
           style={{
+            display: "flex",
             fontSize: 96,
             fontWeight: 900,
             lineHeight: 1,
@@ -41,7 +45,14 @@ export default function OpenGraphImage() {
         >
           Lecathon 2.0
         </div>
-        <div style={{ fontSize: 36, color: "#A3A3A3", marginTop: 24 }}>
+        <div
+          style={{
+            display: "flex",
+            fontSize: 36,
+            color: "#A3A3A3",
+            marginTop: 24,
+          }}
+        >
           Learn · Build · Innovate
         </div>
       </div>

@@ -9,8 +9,8 @@ import {
 
 export const defaultSettings: SiteSettings = {
   hackathonDate: "2026-06-26T09:00:00",
-  scheduleDateLabel: "Asar 12, 2083",
-  prizePool: "NPR 1.30 lakh+",
+  scheduleDateLabel: "Asar 18,19, 2083",
+  prizePool: "NPR 1Lakh+",
   participantsLabel: "50+",
   durationLabel: "48hrs",
   venueName:
@@ -20,7 +20,7 @@ export const defaultSettings: SiteSettings = {
   registrationDeadline: "",
   maxTeams: 0,
   registrationClosedMessage:
-    "Registration is closed. Follow LEC-HACKS for updates.",
+    "Registration is closed. Follow Robotics Club of Lumbini Engineering Management & Science College for updates.",
   socialGithub: "",
   socialInstagram: "",
   socialFacebook: "",

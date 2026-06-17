@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Clock } from "lucide-react";
+import { ORGANIZER_NAME } from "@/app/constants";
 
 function useCountdown(isoDate: string) {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, mins: 0, secs: 0 });
@@ -118,7 +119,7 @@ export default function About({
             </div>
 
             <p className="text-[#A3A3A3] text-sm leading-relaxed">
-            Lecathon  2.0 is the flagship hackathon by LEC-HACKS, designed to bring together the
+            Lecathon 2.0 is the flagship hackathon by {ORGANIZER_NAME}, designed to bring together the
               brightest young minds to solve real-world problems through technology. Whether you&apos;re a
               coder, designer, or visionary — this is your stage to shine.
             </p>
