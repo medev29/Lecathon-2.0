@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import AdminShell from "@/components/admin/AdminShell";
-import { useAdminResource } from "@/components/admin/useAdminResource";
+import { adminJson, useAdminResource } from "@/components/admin/useAdminResource";
 import { AdminButton, AdminCard, AdminInput } from "@/components/admin/admin-ui";
 import type { RegistrationRow } from "@/lib/types/site";
 import { ChevronDown, ChevronRight } from "lucide-react";
@@ -11,6 +11,7 @@ export default function AdminRegistrationsPage() {
   const [search, setSearch] = useState("");
   const [theme, setTheme] = useState("all");
   const [expanded, setExpanded] = useState<number | null>(null);
+  const [deletingId, setDeletingId] = useState<number | null>(null);
 
   const url = useMemo(() => {
     const params = new URLSearchParams();
@@ -33,6 +34,31 @@ export default function AdminRegistrationsPage() {
 
   const toggle = (id: number) => {
     setExpanded((prev) => (prev === id ? null : id));
+  };
+
+  const remove = async (row: RegistrationRow) => {
+    if (
+      !confirm(
+        `Delete registration for team "${row.teamName}"? This cannot be undone.`
+      )
+    ) {
+      return;
+    }
+
+    setDeletingId(row.id);
+    const data = await adminJson(
+      `/api/admin/registrations/${row.id}`,
+      "DELETE"
+    );
+    setDeletingId(null);
+
+    if (data.success) {
+      setMsg("Registration deleted.");
+      if (expanded === row.id) setExpanded(null);
+      load();
+    } else {
+      setMsg(data.message || "Failed to delete registration.");
+    }
   };
 
   return (
@@ -74,7 +100,13 @@ export default function AdminRegistrationsPage() {
         </AdminButton>
       </div>
 
-      {msg && <p className="text-red-400 text-sm mb-4">{msg}</p>}
+      {msg && (
+        <p
+          className={`text-sm mb-4 ${msg.includes("deleted") || msg.includes("Deleted") ? "text-green-400" : "text-red-400"}`}
+        >
+          {msg}
+        </p>
+      )}
 
       <AdminCard className="p-0 overflow-hidden">
         {loading ? (
@@ -114,7 +146,7 @@ export default function AdminRegistrationsPage() {
                     </div>
                   </button>
                   {open && (
-                    <div className="px-4 pb-4 pl-11 text-sm text-[#ccc] space-y-2">
+                    <div className="px-4 pb-4 pl-11 text-sm text-[#ccc] space-y-3">
                       <p>
                         <span className="text-[#888]">Phone:</span> {row.phone}
                       </p>
@@ -128,6 +160,14 @@ export default function AdminRegistrationsPage() {
                           ))}
                         </ul>
                       </div>
+                      <AdminButton
+                        type="button"
+                        variant="danger"
+                        disabled={deletingId === row.id}
+                        onClick={() => remove(row)}
+                      >
+                        {deletingId === row.id ? "Deleting…" : "Delete registration"}
+                      </AdminButton>
                     </div>
                   )}
                 </li>

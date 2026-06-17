@@ -120,3 +120,13 @@ export function registrationsToCsv(rows: RegistrationRow[]): string {
 
   return [headers.join(","), ...lines].join("\n");
 }
+
+export async function deleteRegistration(id: number): Promise<boolean> {
+  const sql = requireSql();
+  const rows = await sql`
+    DELETE FROM registrations
+    WHERE id = ${id}
+    RETURNING id
+  `;
+  return rows.length > 0;
+}
