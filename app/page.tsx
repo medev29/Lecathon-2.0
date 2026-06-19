@@ -43,6 +43,8 @@ export default async function Home() {
         lecaWeekSchedule={content.lecaWeekSchedule}
         hackathonSchedule={content.hackathonSchedule}
         scheduleDateLabel={content.settings.scheduleDateLabel}
+        scheduleDay1Label={content.settings.scheduleDay1Label}
+        scheduleDay2Label={content.settings.scheduleDay2Label}
       />
       <PrizesFAQ faqs={content.faqs} prizePool={content.settings.prizePool} />
       <Footer settings={content.settings} />

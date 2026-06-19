@@ -124,7 +124,7 @@ export default function About({
               coder, designer, or visionary — this is your stage to shine.
             </p>
             <p className="text-[#A3A3A3] text-sm leading-relaxed">
-              Over the course of one intense, idea-fuelled week and a 48-hour offline sprint, participants
+              Over the course of one intense, idea-fuelled week and a 36-hour offline sprint, participants
               will collaborate, innovate, and build products that matter.
             </p>
 

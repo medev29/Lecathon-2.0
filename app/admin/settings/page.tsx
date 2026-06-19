@@ -78,6 +78,20 @@ export default function AdminSettingsPage() {
               }
             />
             <AdminInput
+              label="Schedule tab — Day 1 (online)"
+              value={form.scheduleDay1Label}
+              onChange={(e) =>
+                setForm({ ...form, scheduleDay1Label: e.target.value })
+              }
+            />
+            <AdminInput
+              label="Schedule tab — Day 2 (offline)"
+              value={form.scheduleDay2Label}
+              onChange={(e) =>
+                setForm({ ...form, scheduleDay2Label: e.target.value })
+              }
+            />
+            <AdminInput
               label="Prize pool"
               value={form.prizePool}
               onChange={(e) => setForm({ ...form, prizePool: e.target.value })}

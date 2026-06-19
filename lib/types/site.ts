@@ -34,6 +34,8 @@ export type Faq = {
 export type SiteSettings = {
   hackathonDate: string;
   scheduleDateLabel: string;
+  scheduleDay1Label: string;
+  scheduleDay2Label: string;
   prizePool: string;
   participantsLabel: string;
   durationLabel: string;

@@ -41,19 +41,23 @@ export default function Schedule({
   lecaWeekSchedule,
   hackathonSchedule,
   scheduleDateLabel,
+  scheduleDay1Label,
+  scheduleDay2Label,
 }: {
   lecaWeekSchedule: ScheduleItemType[];
   hackathonSchedule: ScheduleItemType[];
   scheduleDateLabel: string;
+  scheduleDay1Label: string;
+  scheduleDay2Label: string;
 }) {
   const [activeTab, setActiveTab] = useState<"online" | "offline">("online");
 
   const toItems = (rows: ScheduleItemType[]): ScheduleItem[] =>
     rows.map(({ time, phase, description }) => ({ time, phase, description }));
 
-  const lecaItems = toItems(lecaWeekSchedule);
-  const hackItems = toItems(hackathonSchedule);
-  const schedule = activeTab === "online" ? lecaItems : hackItems;
+  const day1Items = toItems(hackathonSchedule);
+  const day2Items = toItems(lecaWeekSchedule);
+  const schedule = activeTab === "online" ? day1Items : day2Items;
 
   return (
     <section id="schedule" className="py-24 relative overflow-hidden">
@@ -92,9 +96,9 @@ export default function Schedule({
               }`}
             >
               <Clock size={13} />
-              Lecaweek (Online)
-              {lecaItems.length > 0 && (
-                <span className="opacity-70">({lecaItems.length})</span>
+              {scheduleDay1Label}
+              {day1Items.length > 0 && (
+                <span className="opacity-70">({day1Items.length})</span>
               )}
             </button>
             <button
@@ -106,9 +110,9 @@ export default function Schedule({
                   : "text-[#A3A3A3] hover:text-white"
               }`}
             >
-              Offline 48 hrs Hackathon
-              {hackItems.length > 0 && (
-                <span className="opacity-70">({hackItems.length})</span>
+              {scheduleDay2Label}
+              {day2Items.length > 0 && (
+                <span className="opacity-70">({day2Items.length})</span>
               )}
             </button>
           </div>

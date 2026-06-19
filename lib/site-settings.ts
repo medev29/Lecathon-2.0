@@ -4,6 +4,8 @@ import type { SiteSettings } from "@/lib/types/site";
 export const SETTINGS_DB_KEYS = {
   hackathonDate: "hackathon_date",
   scheduleDateLabel: "schedule_date_label",
+  scheduleDay1Label: "schedule_day1_label",
+  scheduleDay2Label: "schedule_day2_label",
   prizePool: "prize_pool",
   participantsLabel: "participants_label",
   durationLabel: "duration_label",
@@ -40,6 +42,10 @@ export function parseSiteSettings(
     hackathonDate: map.get(SETTINGS_DB_KEYS.hackathonDate) ?? d.hackathonDate,
     scheduleDateLabel:
       map.get(SETTINGS_DB_KEYS.scheduleDateLabel) ?? d.scheduleDateLabel,
+    scheduleDay1Label:
+      map.get(SETTINGS_DB_KEYS.scheduleDay1Label) ?? d.scheduleDay1Label,
+    scheduleDay2Label:
+      map.get(SETTINGS_DB_KEYS.scheduleDay2Label) ?? d.scheduleDay2Label,
     prizePool: map.get(SETTINGS_DB_KEYS.prizePool) ?? d.prizePool,
     participantsLabel:
       map.get(SETTINGS_DB_KEYS.participantsLabel) ?? d.participantsLabel,
@@ -68,6 +74,8 @@ export function siteSettingsToDbEntries(
   const entries: [string, string | undefined][] = [
     [SETTINGS_DB_KEYS.hackathonDate, settings.hackathonDate],
     [SETTINGS_DB_KEYS.scheduleDateLabel, settings.scheduleDateLabel],
+    [SETTINGS_DB_KEYS.scheduleDay1Label, settings.scheduleDay1Label],
+    [SETTINGS_DB_KEYS.scheduleDay2Label, settings.scheduleDay2Label],
     [SETTINGS_DB_KEYS.prizePool, settings.prizePool],
     [SETTINGS_DB_KEYS.participantsLabel, settings.participantsLabel],
     [SETTINGS_DB_KEYS.durationLabel, settings.durationLabel],

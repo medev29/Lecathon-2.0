@@ -10,6 +10,8 @@ import {
 export const defaultSettings: SiteSettings = {
   hackathonDate: "2026-06-26T09:00:00",
   scheduleDateLabel: "Asar 18,19, 2083",
+  scheduleDay1Label: "Day 1",
+  scheduleDay2Label: "Day 2",
   prizePool: "NPR 1Lakh+",
   participantsLabel: "50+",
   durationLabel: "48hrs",
