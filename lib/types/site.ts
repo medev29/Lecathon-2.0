@@ -78,6 +78,7 @@ export type RegistrationRow = {
   teamName: string;
   college: string;
   theme: string | null;
+  videoUrl: string | null;
   teamSize: number;
   members: { name: string; email: string }[];
   registeredAt: string;

@@ -10,6 +10,7 @@ export interface RegistrationPayload {
   teamName?: string;
   college?: string;
   theme?: string;
+  videoUrl?: string;
   teamSize?: number;
   members?: TeamMember[];
 }
@@ -21,6 +22,7 @@ export interface ValidatedRegistration {
   teamName: string;
   college: string;
   theme: string;
+  videoUrl: string;
   teamSize: number;
   members: TeamMember[];
 }
@@ -29,6 +31,19 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function isValidEmail(email: string): boolean {
   return EMAIL_REGEX.test(email.trim());
+}
+
+function isValidGoogleDriveUrl(url: string): boolean {
+  try {
+    const parsed = new URL(url.trim());
+    if (parsed.protocol !== "https:") {
+      return false;
+    }
+    const host = parsed.hostname.toLowerCase();
+    return host === "drive.google.com" || host === "docs.google.com";
+  } catch {
+    return false;
+  }
 }
 
 export function validateRegistration(
@@ -40,6 +55,7 @@ export function validateRegistration(
   const teamName = body.teamName?.trim();
   const college = body.college?.trim();
   const theme = body.theme?.trim() ?? "";
+  const videoUrl = body.videoUrl?.trim() ?? "";
 
   if (!name) {
     return { ok: false, message: "Team leader name is required." };
@@ -55,6 +71,16 @@ export function validateRegistration(
   }
   if (!college) {
     return { ok: false, message: "College / institution is required." };
+  }
+  if (!videoUrl) {
+    return { ok: false, message: "Google Drive video link is required." };
+  }
+  if (!isValidGoogleDriveUrl(videoUrl)) {
+    return {
+      ok: false,
+      message:
+        "Please paste a valid Google Drive link (https://drive.google.com/...).",
+    };
   }
 
   const teamSize = Number(body.teamSize);
@@ -90,6 +116,7 @@ export function validateRegistration(
       teamName,
       college,
       theme,
+      videoUrl,
       teamSize,
       members: members.map((m) => ({
         name: m.name.trim(),

@@ -163,6 +163,7 @@ function adminNotificationHtml(
       <p style="margin:0 0 8px;"><strong>Phone:</strong> ${escapeHtml(data.phone)}</p>
       <p style="margin:0 0 8px;"><strong>College:</strong> ${escapeHtml(data.college)}</p>
       <p style="margin:0 0 8px;"><strong>Theme:</strong> ${escapeHtml(data.theme || "—")}</p>
+      <p style="margin:0 0 8px;"><strong>Video:</strong> <a href="${escapeHtml(data.videoUrl)}" style="color:#2563eb;">${escapeHtml(data.videoUrl)}</a></p>
       <p style="margin:0 0 16px;"><strong>Team size:</strong> ${data.teamSize}</p>
       <table style="width:100%;border-collapse:collapse;font-size:14px;">
         <thead><tr style="background:#f5f5f5;">
@@ -189,6 +190,7 @@ function confirmationHtml(
       <p style="margin:0 0 8px;"><strong>Reference:</strong> ${escapeHtml(registrationId)}</p>
       <p style="margin:0 0 8px;"><strong>College:</strong> ${escapeHtml(data.college)}</p>
       <p style="margin:0 0 8px;"><strong>Preferred theme:</strong> ${escapeHtml(data.theme || "Not selected")}</p>
+      <p style="margin:0 0 8px;"><strong>Video link received:</strong> yes</p>
       <p>We'll send event details and next steps to this email soon. Keep an eye on your inbox.</p>
       <p style="margin:24px 0 0;font-size:12px;color:#666;">— ${ORGANIZER_NAME} · Lecathon 2.0</p>
     </div>

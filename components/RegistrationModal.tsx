@@ -27,6 +27,7 @@ export default function RegistrationModal({
     teamName: "",
     college: "",
     theme: "",
+    videoUrl: "",
     teamSize: 1,
     members: [{ ...emptyMember }],
   });
@@ -73,6 +74,7 @@ export default function RegistrationModal({
         teamName: "",
         college: "",
         theme: "",
+        videoUrl: "",
         teamSize: 1,
         members: [{ ...emptyMember }],
       });
@@ -289,6 +291,26 @@ export default function RegistrationModal({
                         </option>
                       ))}
                     </select>
+                  </div>
+
+                  <div>
+                    <label className="text-xs text-[#A3A3A3] mb-1 block">
+                      Google Drive Video Link *
+                    </label>
+                    <input
+                      type="url"
+                      required
+                      value={form.videoUrl}
+                      onChange={(e) =>
+                        setForm({ ...form, videoUrl: e.target.value })
+                      }
+                      className="w-full bg-[#111] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-yellow-400/50 transition-colors"
+                      placeholder="https://drive.google.com/file/d/..."
+                    />
+                    <p className="text-[10px] text-[#666] mt-1 leading-relaxed">
+                      Paste a shareable Google Drive link to your team video.
+                      Set sharing to &quot;Anyone with the link&quot;.
+                    </p>
                   </div>
 
                   {error && <p className="text-red-400 text-xs">{error}</p>}

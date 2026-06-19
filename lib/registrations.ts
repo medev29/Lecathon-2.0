@@ -9,6 +9,7 @@ type RegistrationDbRow = {
   team_name: string;
   college: string;
   theme: string | null;
+  video_url: string | null;
   team_size: number;
   members: { name: string; email: string }[];
   registered_at: string;
@@ -39,6 +40,7 @@ function mapRow(row: RegistrationDbRow): RegistrationRow {
     teamName: row.team_name,
     college: row.college,
     theme: row.theme,
+    videoUrl: row.video_url,
     teamSize: row.team_size,
     members: parseMembers(row.members),
     registeredAt: row.registered_at,
@@ -92,6 +94,7 @@ export function registrationsToCsv(rows: RegistrationRow[]): string {
     "Team Name",
     "College",
     "Theme",
+    "Video URL",
     "Team Size",
     "Members",
   ];
@@ -111,6 +114,7 @@ export function registrationsToCsv(rows: RegistrationRow[]): string {
       row.teamName,
       row.college,
       row.theme ?? "",
+      row.videoUrl ?? "",
       row.teamSize,
       members,
     ]

@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS registrations (
   team_name TEXT NOT NULL,
   college TEXT NOT NULL,
   theme TEXT,
+  video_url TEXT,
   team_size INTEGER NOT NULL CHECK (team_size >= 1 AND team_size <= 4),
   members JSONB NOT NULL,
   registered_at TIMESTAMPTZ NOT NULL DEFAULT NOW()

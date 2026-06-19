@@ -104,6 +104,7 @@ export async function GET() {
       "phone",
       "teamName",
       "college",
+      "videoUrl",
       "teamSize",
       "members",
     ],

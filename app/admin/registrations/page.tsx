@@ -150,6 +150,21 @@ export default function AdminRegistrationsPage() {
                       <p>
                         <span className="text-[#888]">Phone:</span> {row.phone}
                       </p>
+                      {row.videoUrl ? (
+                        <p>
+                          <span className="text-[#888]">Video:</span>{" "}
+                          <a
+                            href={row.videoUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-yellow-400 hover:text-yellow-300 break-all"
+                          >
+                            Open Google Drive link
+                          </a>
+                        </p>
+                      ) : (
+                        <p className="text-[#888]">Video: —</p>
+                      )}
                       <div>
                         <p className="text-[#888] mb-1">Members:</p>
                         <ul className="list-disc pl-5 space-y-1">
