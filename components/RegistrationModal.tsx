@@ -311,6 +311,23 @@ export default function RegistrationModal({
                       Paste a shareable Google Drive link to your team video.
                       Set sharing to &quot;Anyone with the link&quot;.
                     </p>
+                    <details className="mt-2 rounded-lg border border-white/10 bg-[#111] px-3 py-2 group">
+                      <summary className="text-xs text-yellow-400/90 cursor-pointer list-none flex items-center justify-between gap-2 [&::-webkit-details-marker]:hidden">
+                        <span>What should I put in this field?</span>
+                        <span className="text-[#666] group-open:rotate-180 transition-transform">
+                          ▾
+                        </span>
+                      </summary>
+                      <p className="text-[11px] text-[#A3A3A3] mt-2 leading-relaxed">
+                        Prepare a presentation video explaining your
+                        project&apos;s workflow, problem statement, and its
+                        solution. The video must be{" "}
+                        <span className="text-white font-medium">2–5 minutes</span>{" "}
+                        long. Upload it to Google Drive, set sharing to
+                        &quot;Anyone with the link&quot;, then paste the link
+                        here.
+                      </p>
+                    </details>
                   </div>
 
                   {error && <p className="text-red-400 text-xs">{error}</p>}
