@@ -131,7 +131,7 @@ export default function Hero({
                         ? "Teams Registered"
                         : "Participants",
                   },
-                  { value: durationLabel, label: "Non-stop Coding" },
+                  { value: durationLabel, label: "of innovation" },
                   { value: prizePool, label: "Prize Pool" },
                 ].map((stat) => (
                   <div key={stat.label} className="flex flex-col">
